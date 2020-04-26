@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  scrapper:
+    tty: true
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: Dockerfile.development
+    command: ./bin/docker_entrypoint.sh
