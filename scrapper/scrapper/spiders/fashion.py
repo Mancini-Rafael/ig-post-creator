@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 import scrapy
 
-
 class FashionSpider(scrapy.Spider):
     name = 'fashion'
+    custom_settings = {
+        'LOG_ENABLED': False,
+    }
     '''
     urls = ['https://www.brechoclosetdeluxo.com.br/acessorios/',
             'https://www.brechoclosetdeluxo.com.br/acessorios/page/2/',
