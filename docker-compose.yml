@@ -7,4 +7,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.development
-    command: ./bin/docker_entrypoint.sh
+    command: ./bin/docker_entrypoint.sh pipenv shell
+    ports:
+      - "6800:6800"
+    volumes:
+      - .:/app
