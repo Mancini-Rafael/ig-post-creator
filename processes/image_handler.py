@@ -22,6 +22,13 @@ class Main:
         # with open("tmp/imgs/{index}.jpg".format(index = index), 'wb') as handler:
         #   handler.write(img_data)
 
+  def combine_images(self):
+    """
+      Will look in the items.json file and merge the jpegs for each ad,
+      and add the template text
+    """
+
+
   def check_file_folder_presence(self):
     """
       Will check if the items.json file and the imgs folder are present
