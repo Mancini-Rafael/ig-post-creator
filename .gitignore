@@ -6,3 +6,5 @@
 
 # Ignore bundler config.
 __pycache__
+tmp/
+items.json

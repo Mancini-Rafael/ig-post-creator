@@ -25,11 +25,7 @@ class FashionSpider(scrapy.Spider):
     '''
 
     def start_requests(self):
-        urls = ['https://www.brechoclosetdeluxo.com.br/acessorios/',
-                'https://www.brechoclosetdeluxo.com.br/acessorios/page/2/',
-                'https://www.brechoclosetdeluxo.com.br/acessorios/page/3/',
-                'https://www.brechoclosetdeluxo.com.br/acessorios/page/4/',
-                'https://www.brechoclosetdeluxo.com.br/acessorios/page/5/']
+        urls = ['https://www.brechoclosetdeluxo.com.br/acessorios/']
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
     

@@ -3,6 +3,10 @@ import json
 import sys
 import shutil
 import requests
+import numpy
+from PIL import Image
+from PIL import ImageFont
+from PIL import ImageDraw 
 
 class Main:
   def __init__(self):
@@ -15,19 +19,66 @@ class Main:
       Each image will be named after the json list index.
     """
     self.check_file_folder_presence()
-    with open('items.json') as json_file:
+    with open(os.getenv('JSON_FILE_PATH')) as json_file:
       data = json.load(json_file)
       for index, item_data in enumerate(data):
         img_data = requests.get(f"https://{item_data['url']}").content        
-        # with open("tmp/imgs/{index}.jpg".format(index = index), 'wb') as handler:
-        #   handler.write(img_data)
+        with open("tmp/imgs/{index}.jpg".format(index = index), 'wb') as handler:
+          handler.write(img_data)
 
   def combine_images(self):
     """
       Will look in the items.json file and merge the jpegs for each ad,
       and add the template text
     """
+    with open(os.getenv('JSON_FILE_PATH')) as json_file:
+      data = json.load(json_file)
+      for index, item_data in enumerate(data):
+        # Find image with the same index -> Content
+        raw_image = Image.open(f'tmp/imgs/{index}.jpg')
+        content = raw_image.resize((int(os.getenv('IMAGE_WIDTH_IN_PIXELS')), int(os.getenv('IMAGE_HEIGHT_IN_PIXELS'))))
+        # Draw info on banners -> Top / Bottom
+        top_banner = self.draw_top_banner(item_data['desc'])
+        bottom_banner = self.draw_bottom_banner(item_data['value_raw'])
+        # Combine images
+        images = [top_banner, content, bottom_banner]
+        imgs_comb = numpy.vstack(images)
+        imgs_comb = Image.fromarray(imgs_comb)
+        # Save images
+        imgs_comb.save(f'resources/results/{index}.jpg')
 
+  def draw_top_banner(self, text):
+    raw_img = Image.open("resources/imgs/top_banner.jpg")
+    font = ImageFont.truetype(os.getenv('BOLD_FONT_FILE_PATH'), 64)
+    img = raw_img.resize((1080, 411))
+    color = (int(os.getenv('BANNER_TEXT_COLOR_R')), int(os.getenv('BANNER_TEXT_COLOR_G')), int(os.getenv('BANNER_TEXT_COLOR_B')))
+    draw = ImageDraw.Draw(img)
+    orig_width, orig_height = img.size[0], img.size[1]
+    text_grouped = self.split_text_in_threes(text)
+    for idx, piece in enumerate(text_grouped):
+      text_width, text_height = draw.textsize(piece, font = font)
+      draw.text(((orig_width - text_width)/2, (((orig_height - len(text_grouped)*100) - text_height)/2) + ((idx + 1)* 80)), piece, color, font = font)
+    return img
+
+  def draw_bottom_banner(self, text):
+    raw_img = Image.open("resources/imgs/bottom_banner.jpg")
+    font = ImageFont.truetype("resources/fonts/OpenSans-Light.ttf", 64)
+    img = raw_img.resize((1080, 411))
+    orig_width, orig_height = img.size[0], img.size[1]
+    color = (int(os.getenv('BANNER_TEXT_COLOR_R')), int(os.getenv('BANNER_TEXT_COLOR_G')), int(os.getenv('BANNER_TEXT_COLOR_B')))
+    draw = ImageDraw.Draw(img)
+    
+    text_width, text_height = draw.textsize(text, font = font)
+    draw.text(((orig_width-text_width)/2, ((orig_height-text_height)/2) - 110), text, (250,250,250), font = font)
+    
+    text_width, text_height = draw.textsize('em até 12x sem juros', font = font)
+    draw.text(((orig_width-text_width)/2, ((orig_height-text_height)/2) - 20), 'em até 12x sem juros', color, font = font)
+    return img
+
+  def split_text_in_threes(self, text):
+    words = text.split()
+    grouped_words = [' '.join(words[i: i + 3]) for i in range(0, len(words), 3)]
+    return grouped_words
 
   def check_file_folder_presence(self):
     """
