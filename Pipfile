@@ -15,6 +15,7 @@ python-dotenv = "*"
 numpy = "*"
 pymongo = "*"
 dnspython = "*"
+auto-py-to-exe = "*"
 
 [requires]
 python_version = "3.7"
