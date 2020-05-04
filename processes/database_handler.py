@@ -13,8 +13,8 @@ class Main:
     }
   """
   def __init__(self):
-    self.username = 'fashion_scrapper'
-    self.password = 'W7wJKiEbMqOntegw'
+    self.username = os.getenv('DB_USERNAME')
+    self.password = os.getenv('DB_PASSWORD')
     self.db_url = f"mongodb+srv://{self.username}:{self.password}@clio-qab7o.mongodb.net/"
     self.client = pymongo.MongoClient(self.db_url)
   
