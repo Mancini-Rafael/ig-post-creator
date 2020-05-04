@@ -1,6 +1,7 @@
 import pymongo
 import json
 import os
+from slugify import slugify
 
 class Main:
   """
@@ -30,11 +31,14 @@ class Main:
           continue
     return non_duplicated_data
   
+  def update_db(self, data):
+    pass
+  
 
   def normalize_data(self, data):
     normalized_image = {
       'image_url': data['url'],
-      'description': data['desc'],
+      'description': slugify(data['desc']),
       'value': data['value_raw']
     }
     return normalized_image

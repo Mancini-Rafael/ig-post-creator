@@ -7,39 +7,36 @@ import numpy
 import math
 from PIL import Image
 from PIL import ImageFont
-from PIL import ImageDraw 
+from PIL import ImageDraw
+from slugify import slugify
 
 class Main:
   def __init__(self):
     pass
 
-  def download_images(self):
+  def download_images(self, data):
     """
-      Will loop through a item.json file in the project
-      root and download all images to a imgs folder.
-      Each image will be named after the json list index.
+      Will loop through the sent data object and download
+      all images to a imgs folder. Each image will be named
+      after the json list index.
     """
     self.check_file_folder_presence()
-    with open(os.getenv('JSON_FILE_PATH')) as json_file:
-      data = json.load(json_file)
-      for index, item_data in enumerate(data):
-        request = requests.get(f"https://{item_data['url']}")
-        print(f"Downloaded {item_data['desc']}")
-        img_extension = request.headers['Content-Type']
-        img_data = request.content
-        path = "tmp/imgs/{index}.jpg".format(index = index)
-        with open(path, 'wb') as handler:
-          handler.write(img_data)
-        self.resize_img_to_aspect_ratio(path)
+    for index, item_data in enumerate(data):
+      request = requests.get(f"https://{item_data['url']}")
+      print(f"Downloaded {item_data['desc']}")
+      img_extension = request.headers['Content-Type']
+      img_data = request.content
+      path = "tmp/imgs/{index}.jpg".format(index = index)
+      with open(path, 'wb') as handler:
+        handler.write(img_data)
+      self.resize_img_to_aspect_ratio(path)
 
-  def combine_images(self):
+  def combine_images(self, data):
     """
-      Will look in the items.json file and merge the jpegs for each ad,
+      Will look in the data object and merge the jpegs for each ad,
       and add the template text
     """
-    with open(os.getenv('JSON_FILE_PATH')) as json_file:
-      data = json.load(json_file)
-      for index, item_data in enumerate(data):
+    for index, item_data in enumerate(data):
         # Find image with the same index -> Content
         path = f"tmp/imgs/{index}.jpg"
         content = Image.open(path)
@@ -54,10 +51,10 @@ class Main:
         new_image.paste(content, content_coord)
         new_image.paste(top_banner, top_banner_coord)
         new_image.paste(bottom_banner, bottom_banner_coord)
-        image_name = item_data['desc'].split(" ")
-        image_name = "_".join(image_name)
+        image_name = slugify(item_data['desc'])
         print(f'Finished {image_name}')
-        new_image.save(f'resources/results/{image_name.lower().replace("/", "_")}.jpg')
+        new_image.save(f'resources/results/{image_name}.jpg')
+      
 
   def draw_top_banner(self, text):
     raw_img = Image.open("resources/imgs/top_banner.jpg")
@@ -109,16 +106,12 @@ class Main:
       Will check if the items.json file and the imgs folder are present
       and that the imgs folder is empty
     """
-
     print("Checking file and folder structure")
-    if os.path.exists("tmp/imgs") and not(os.path.isdir("tmp/imgs")):
-      print("Images file present instead of folder")
-      # Remove imgs file
-    elif os.path.exists("tmp/imgs") and os.path.isdir("tmp/imgs"):
+    if os.path.exists("tmp/imgs"):
       print("Images folder present. Will delete contents to proceed and proceed")
       shutil.rmtree('tmp/imgs')
-    elif not(os.path.exists("items.json")) or not(os.path.isfile("items.json")):
-      sys.exit("Can't find the items.json file. It must be present to proceed")
-    else:
-      print("Images folder not present. Will create")
+    if os.path.exists("resources/results"):
+      print("Results folder present. Will delete contents to proceed and proceed")
+      shutil.rmtree('resources/results')
     os.mkdir("tmp/imgs")
+    os.mkdir("resources/results")

@@ -20,13 +20,13 @@ def run():
         data = database_handler.Main().check_for_duplicates()
         ##########################
         print("Downloading new images")
-        image_handler.Main().download_images()
+        image_handler.Main().download_images(data)
         ##########################
         print("Generating posts")
-        image_handler.Main().combine_images()
+        image_handler.Main().combine_images(data)
         #########################
         print("Updating databases")
-        database_handler.Main().update_db()
+        # database_handler.Main().update_db(data)
         ##########################
         print("All Done. Check tmp/results folder for new generated posts")
         print("**ATTENTION** Running the command will clear all the generated posts inside tmp/results")
