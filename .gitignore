@@ -14,3 +14,4 @@ __pycache__/**
 resources/.DS_Store
 .DS_Store
 .pylintrc
+.env
