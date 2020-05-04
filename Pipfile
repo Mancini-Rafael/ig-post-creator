@@ -13,6 +13,8 @@ requests = "*"
 pillow = "*"
 python-dotenv = "*"
 numpy = "*"
+pymongo = "*"
+dnspython = "*"
 
 [requires]
 python_version = "3.7"
