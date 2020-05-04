@@ -22,5 +22,6 @@ class Main:
       os.remove("items.json")
     else:
       print("The file does not exist, starting scrape")
+    print(f"************ Scraping: {url} ************")
     self.process.crawl(fashion.FashionSpider, url=url)
     self.process.start()

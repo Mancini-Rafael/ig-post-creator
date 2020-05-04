@@ -37,10 +37,6 @@ class Main:
       Will look in the items.json file and merge the jpegs for each ad,
       and add the template text
     """
-    #fashion_scrapper
-    #W7wJKiEbMqOntegw
-    # client = pymongo.MongoClient("mongodb+srv://fashion_scrapper:W7wJKiEbMqOntegw@clio-qab7o.mongodb.net/test?retryWrites=true&w=majority")
-    # client.list_database_names()
     with open(os.getenv('JSON_FILE_PATH')) as json_file:
       data = json.load(json_file)
       for index, item_data in enumerate(data):

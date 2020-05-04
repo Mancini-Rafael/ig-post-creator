@@ -9,7 +9,6 @@ class FashionSpider(scrapy.Spider):
     }
 
     def start_requests(self):
-        print(f"************ Scraping: {self.url} ************")
         yield scrapy.Request(url=self.url, callback=self.parse)       
     
     def parse(self, response):

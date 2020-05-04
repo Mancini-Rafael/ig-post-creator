@@ -15,6 +15,7 @@ python-dotenv = "*"
 numpy = "*"
 pymongo = "*"
 dnspython = "*"
+python-slugify = "*"
 
 [requires]
 python_version = "3.7"
