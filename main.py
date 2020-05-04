@@ -6,35 +6,32 @@ load_dotenv()
 def run():
     print("Welcome to the automated IG post creator")
     ask_for_input()
-    state = 'run'
-    while state == 'run':
+    url = ''
+    while url != 'exit':
       url = input()
-      if url == 'exit':
-        print("Exiting")
-        break
-      else:
-        try:
-          print("Scraping")
-          scraper.Main().scrape(url)
-          ##########################
-          print("Checking for duplicates")
-          database_handler.Main().check_for_duplicates()
-          ##########################
-          print("Downloading new images")
-          image_handler.Main().download_images()
-          ##########################
-          print("Generating posts")
-          image_handler.Main().combine_images()
-          #########################
-          print("Updating databases")
-          database_handler.Main().update_db()
-          ##########################
-          print("All Done. Check tmp/results folder for new generated posts")
-          print("**ATTENTION** Running the command will clear all the generated posts inside tmp/results")
-          ask_for_input()
-          continue
-        except:
-          log_error()
+      try:
+        print("Scraping")
+        scraper.Main().scrape(url)
+        ##########################
+        print("Checking for duplicates")
+        database_handler.Main().check_for_duplicates()
+        ##########################
+        print("Downloading new images")
+        image_handler.Main().download_images()
+        ##########################
+        print("Generating posts")
+        image_handler.Main().combine_images()
+        #########################
+        print("Updating databases")
+        database_handler.Main().update_db()
+        ##########################
+        print("All Done. Check tmp/results folder for new generated posts")
+        print("**ATTENTION** Running the command will clear all the generated posts inside tmp/results")
+        ask_for_input()
+        continue
+      except:
+        log_error()
+    print("Exiting")
 
 def log_error():
     print(f"Error during script. Please check with the developer")
