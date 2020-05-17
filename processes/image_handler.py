@@ -23,9 +23,8 @@ class Main:
         """
         self.check_file_folder_presence()
         for index, item_data in enumerate(data):
-            request = requests.get(f"https://{item_data['url']}")
-            print(f"Downloaded {item_data['desc']}")
-            img_extension = request.headers['Content-Type']
+            request = requests.get(f"https://{item_data['image_url']}")
+            print(f"Downloaded {item_data['description']}")
             img_data = request.content
             path = "tmp/imgs/{index}.jpg".format(index=index)
             with open(path, 'wb') as handler:
@@ -42,8 +41,8 @@ class Main:
             path = f"tmp/imgs/{index}.jpg"
             content = Image.open(path)
             # Draw info on banners -> Top / Bottom
-            top_banner = self.draw_top_banner(item_data['desc'])
-            bottom_banner = self.draw_bottom_banner(item_data['value_raw'])
+            top_banner = self.draw_top_banner(item_data['description'])
+            bottom_banner = self.draw_bottom_banner(item_data['value'])
             # Combine images
             new_image = Image.new(mode='RGB', size=(1080, 1920), color='white')
             top_banner_coord = (0, 0)
@@ -52,7 +51,7 @@ class Main:
             new_image.paste(content, content_coord)
             new_image.paste(top_banner, top_banner_coord)
             new_image.paste(bottom_banner, bottom_banner_coord)
-            image_name = slugify(item_data['desc'])
+            image_name = item_data['description']
             print(f'Finished {image_name}')
             new_image.save(f'resources/results/{image_name}.jpg')
 

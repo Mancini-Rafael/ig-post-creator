@@ -7,8 +7,20 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.development
-    command: ./bin/docker_entrypoint.sh pipenv shell
+    command: ./bin/docker_entrypoint.sh run
+    depends_on:
+      - db
     ports:
       - "6800:6800"
     volumes:
       - .:/app
+  db:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./database:/data/db
+    

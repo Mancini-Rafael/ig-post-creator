@@ -1,18 +1,15 @@
+import traceback
 from dotenv import load_dotenv
 from processes import scraper
 from processes import image_handler
 from processes import database_handler
 load_dotenv()
 
-
 def run():
     print("Welcome to the automated IG post creator")
-
-    url = ''
+    ask_for_input()
+    url = input()
     while url != 'exit':
-        print("Please enter the url you wish to scrape without quotes")
-        print("If you don't wish to scrape anymore, type *exit*")
-        url = input()
         try:
             print("Scraping")
             scraper.Main().scrape(url)
@@ -27,12 +24,23 @@ def run():
             image_handler.Main().combine_images(data)
             #########################
             print("Updating databases")
-            # database_handler.Main().update_db(data)
+            database_handler.Main().update_db(data)
             ##########################
             print("All Done. Check tmp/results folder for new generated posts")
-            print(
-                "**ATTENTION** Running the command will clear all the generated posts inside tmp/results")
+            print("**ATTENTION** Running the command will clear all the generated posts inside tmp/results")
+            ask_for_input()
+            url = input()
             continue
         except:
+            traceback.print_exc()
             print(f"Error during script. Please check with the developer")
     print("Exiting")
+
+def log_error(msg):
+    print(f"Error during script {msg}. Please check with the developer")
+
+def ask_for_input():
+    print("Please enter the url you wish to scrape")
+    print("If you don't wish to scrape anymore, type *exit*")
+
+run()

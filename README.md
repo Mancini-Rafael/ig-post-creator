@@ -20,5 +20,4 @@ Instagram Post automator is a CLI tool that allows a user to automate the proces
 
 
 ## Usage
-
-Simply run  ```python main.py``` and follow the instructions
+1 - Run ```docker-compose run --rm --service-ports scrapper pipenv run python main.py```
