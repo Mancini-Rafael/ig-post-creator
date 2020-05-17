@@ -36,9 +36,6 @@ def run():
             print(f"Error during script. Please check with the developer")
     print("Exiting")
 
-def log_error(msg):
-    print(f"Error during script {msg}. Please check with the developer")
-
 def ask_for_input():
     print("Please enter the url you wish to scrape")
     print("If you don't wish to scrape anymore, type *exit*")
