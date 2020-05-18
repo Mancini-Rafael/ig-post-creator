@@ -40,4 +40,4 @@ def ask_for_input():
     print("Please enter the url you wish to scrape")
     print("If you don't wish to scrape anymore, type *exit*")
 
-run()
+# run()

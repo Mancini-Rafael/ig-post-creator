@@ -5,6 +5,7 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 items.json
 resources/results/**
+database/**
 tmp/imgs/**
 processes/__pycache__/
 scrapper/scrapper/spiders/__pycache__/**

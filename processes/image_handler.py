@@ -41,7 +41,7 @@ class Main:
             path = f"tmp/imgs/{index}.jpg"
             content = Image.open(path)
             # Draw info on banners -> Top / Bottom
-            top_banner = self.draw_top_banner(item_data['description'])
+            top_banner = self.draw_top_banner(item_data['description_raw'])
             bottom_banner = self.draw_bottom_banner(item_data['value'])
             # Combine images
             new_image = Image.new(mode='RGB', size=(1080, 1920), color='white')
@@ -57,10 +57,9 @@ class Main:
 
     def draw_top_banner(self, text):
         raw_img = Image.open("resources/imgs/top_banner.jpg")
-        font = ImageFont.truetype(os.getenv('BOLD_FONT_FILE_PATH'), 64)
+        font = ImageFont.truetype("resources/fonts/OpenSans-Bold.ttf", 64)
         img = raw_img.resize((1080, 411))
-        color = (int(os.getenv('BANNER_TEXT_COLOR_R')), int(
-            os.getenv('BANNER_TEXT_COLOR_G')), int(os.getenv('BANNER_TEXT_COLOR_B')))
+        color = (0, 0, 0)
         draw = ImageDraw.Draw(img)
         orig_width, orig_height = img.size[0], img.size[1]
         text_grouped = self.split_text_in_threes(text)
@@ -75,8 +74,7 @@ class Main:
         font = ImageFont.truetype("resources/fonts/OpenSans-Light.ttf", 64)
         img = raw_img.resize((1080, 411))
         orig_width, orig_height = img.size[0], img.size[1]
-        color = (int(os.getenv('BANNER_TEXT_COLOR_R')), int(
-            os.getenv('BANNER_TEXT_COLOR_G')), int(os.getenv('BANNER_TEXT_COLOR_B')))
+        color = (250, 250, 250)
         draw = ImageDraw.Draw(img)
 
         text_width, text_height = draw.textsize(text, font=font)

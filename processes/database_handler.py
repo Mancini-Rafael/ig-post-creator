@@ -31,6 +31,7 @@ class Main:
         normalized_image = {
             'image_url': data['url'],
             'description': slugify(data['desc']),
+            'description_raw': data['desc'],
             'value': data['value_raw']
         }
         return normalized_image
