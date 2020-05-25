@@ -74,7 +74,6 @@ class Main:
         font = ImageFont.truetype("resources/fonts/OpenSans-Light.ttf", 64)
         img = raw_img.resize((1080, 411))
         orig_width, orig_height = img.size[0], img.size[1]
-        color = (250, 250, 250)
         draw = ImageDraw.Draw(img)
 
         text_width, text_height = draw.textsize(text, font=font)
@@ -84,7 +83,7 @@ class Main:
         text_width, text_height = draw.textsize(
             'em até 12x sem juros', font=font)
         draw.text(((orig_width-text_width)/2, ((orig_height-text_height) /
-                                               2) - 20), 'em até 12x sem juros', color, font=font)
+                                               2) - 20), 'em até 12x sem juros', (0, 0, 0), font=font)
         return img
 
     # HELPER METHODS
