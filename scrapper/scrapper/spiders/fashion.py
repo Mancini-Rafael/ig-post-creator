@@ -7,6 +7,7 @@ class FashionSpider(scrapy.Spider):
     name = 'fashion'
     custom_settings = {
         'LOG_ENABLED': False,
+        "FEEDS": {"items.json": {"format": "json"}}
     }
 
     def start_requests(self):

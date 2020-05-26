@@ -35,3 +35,6 @@ class Main:
             'value': data['value_raw']
         }
         return normalized_image
+    
+    def clean_data(self):
+        self.client.fashion_scrapper.images.drop()

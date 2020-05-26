@@ -17,6 +17,7 @@ pymongo = "*"
 dnspython = "*"
 python-slugify = "*"
 autopep8 = "*"
+crochet = "*"
 
 [requires]
 python_version = "3.7"

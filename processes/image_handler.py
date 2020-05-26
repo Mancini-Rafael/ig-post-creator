@@ -100,9 +100,12 @@ class Main:
 
     def split_text_in_threes(self, text):
         words = text.split()
-        grouped_words = [' '.join(words[i: i + 3])
-                         for i in range(0, len(words), 3)]
+        grouped_words = [self.clean(' '.join(words[i: i + 3])) for i in range(0, len(words), 3)]
         return grouped_words
+    
+    def clean(self, text):
+        return text.replace("Dolce&Gabbana", "D&G")
+
 
     def check_file_folder_presence(self):
         """
