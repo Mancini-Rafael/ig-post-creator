@@ -12,9 +12,9 @@ case "$COMMAND" in
     echo "=== INSTALLING DEPENDENCIES ==="
     pipenv sync
     ;;
-  run)
+  scrape)
     echo "=== RUNNING SCRAPPER ==="
-    pipenv run python -i main.py
+    pipenv run python main.py
     ;;
   *)
     echo "=== RUNNING COMAND  $*==="
