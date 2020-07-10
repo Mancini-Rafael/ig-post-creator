@@ -26,5 +26,6 @@ Instagram Post automator is a python script tool that allows a user to automate 
 - Run the command ```./bin/docker_setup.sh```
 
 ## Usage
-- Inside a command line, run ```docker-compose run --rm --service-ports scrapper scrape```
-- In the python terminal, follow the instructions
+- Inside a command line, run ```docker-compose run --rm --service-ports scrapper bash```
+- Run the command ```pipenv sync``` 
+- To scrape, run ```pipenv run python main.py```

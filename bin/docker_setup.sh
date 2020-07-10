@@ -9,8 +9,4 @@ fi
 echo "=== Docker Compose installed. Proceeding... ==="
 echo "=== Building containers ==="
 docker-compose build scrapper
-
-echo "=== Setuping scrapper on mode DEVELOPMENT ==="
-echo "=== Bundling  dependencies ==="
-docker-compose run --rm scrapper bundle
 echo "Setup Finished!"

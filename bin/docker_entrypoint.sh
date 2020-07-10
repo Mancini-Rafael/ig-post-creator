@@ -7,13 +7,9 @@ COMMAND="$1"
 echo "=== ATTENTION | RUN PYTHON COMMANDS USING PIPENV ==="
 
 case "$COMMAND" in
-  bundle)
-    echo "=== ACCESSING LOCAL DEPENDENCIES ==="
-    echo "=== INSTALLING DEPENDENCIES ==="
-    pipenv sync
-    ;;
   scrape)
     echo "=== RUNNING SCRAPPER ==="
+    pipenv sync
     pipenv run python main.py
     ;;
   *)
