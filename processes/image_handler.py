@@ -31,7 +31,7 @@ class Main:
                 handler.write(img_data)
             self.resize_img_to_aspect_ratio(path)
 
-    def combine_images(self, data):
+    def generate_insta_posts(self, data):
         """
           Will look in the data object and merge the jpegs for each ad,
           and add the template text
@@ -54,6 +54,23 @@ class Main:
             image_name = item_data['description']
             print(f'Finished {image_name}')
             new_image.save(f'resources/results/{image_name}.jpg')
+
+    def generate_sale_posts(self, data):
+        """
+          Will look in the data object and merge the jpegs for each ad,
+          and add the template image
+        """
+        for index, item_data in enumerate(data):
+            # Find image with the same index -> Content
+            path = f"tmp/imgs/{index}.jpg"
+            bg = Image.open(path).convert('RGB')
+            fg = Image.open("resources/imgs/sale_banner.png").convert('RGBA')
+            fg_resized = fg.resize((300,300))
+            coords = (780, 0)
+            bg.paste(fg_resized,box=coords,mask=fg_resized)
+            image_name = item_data['description']
+            bg.save(f'resources/results/{image_name}_sale.jpg')
+            print(f'Finished {image_name}')
 
     def draw_top_banner(self, text):
         raw_img = Image.open("resources/imgs/top_banner.jpg")
@@ -105,7 +122,6 @@ class Main:
     
     def clean(self, text):
         return text.replace("Dolce&Gabbana", "D&G")
-
 
     def check_file_folder_presence(self):
         """

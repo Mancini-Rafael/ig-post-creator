@@ -1,8 +1,8 @@
 import os
+import scrapy
+from twisted.internet import reactor
 from scrapy.crawler import CrawlerRunner
 from scrapper.scrapper.spiders import fashion
-from crochet import setup
-setup()
 
 
 class Main:
@@ -21,6 +21,9 @@ class Main:
             os.remove("items.json")
         else:
             print("The file does not exist, starting scrape")
+        
         print(f"************ Scraping: {url} ************")
-        crawler = CrawlerRunner()
-        crawler.crawl(fashion.FashionSpider, url=url)
+        runner = CrawlerRunner()
+        d = runner.crawl(fashion.FashionSpider, url=url)
+        d.addBoth(lambda _: reactor.stop())
+        reactor.run() # the script will block here until the crawling is finished
