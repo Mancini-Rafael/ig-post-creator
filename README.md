@@ -1,12 +1,12 @@
-# IG Post Automator
+# IG Post Automator - Fashion Version
 
 <img src="https://raw.githubusercontent.com/Mancini-Rafael/ig-post-creator/master/resources/imgs/instagram_icon.png" align="right"
      alt="IG logo" width="120" height="120">
 
-Instagram Post automator is a python script tool that allows a user to automate the process of generating a IG story post by scraping a website.
-
-* Ignores products that are unavailable
-* Support to MongoDB tracking of generated IG stories (*pending*)
+Python based scrapper that given an url:
+- Parses the URL for images
+- Extract images in high quality
+- Process images and applies visual elements in order to speed up generation of IG posts for fashion publisher
 
 # Requirements
 - Docker
